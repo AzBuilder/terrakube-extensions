@@ -32,7 +32,7 @@ flow:
         before: true
         script: |
           echo $PATH
-          hello.sh
+          helloWorld.sh
           terratag.sh
   - type: "terraformApply"
     step: 300
@@ -40,9 +40,52 @@ flow:
 
 At runtime while executing a job workspace the groovy clases and bash scripts are loaded inside the job context so you can execute user defined actions.
 
+## Bash Script Injection
+
+During runtime all the bash scripts inside the folder ***bash*** for this repository are loaded inside the job context, so we can call different scripts like the following example
+
+```yaml
+flow:
+  - type: "customScripts"
+    step: 100
+    commands:
+      - runtime: "BASH"
+        priority: 200
+        before: true
+        script: |
+          helloWorld.sh
+          terratag.sh
+  - type: "terraformApply"
+    step: 300
+```
+
+> All bash scripts should end with extension ***".sh"***
+
+## Groovy Classes Injection
+
+During runtime all the groovy classes are loaded inside the job context, we can import it using an import statement like the following example:
+
+```yaml
+flow:
+  - type: "terraformPlan"
+    step: 100
+    commands:
+      - runtime: "GROOVY"
+        priority: 100
+        before: true
+        script: |
+          
+          import TerraTag
+
+          new TerraTag().downloadTerraTag("$workingDirectory", "0.1.29", "darwin", "amd64")
+          "TerraTag Download Compledted..."
+```
+
+> All clases should end with extension ***".groovy"***
+
 ## Field Injection
 
-By default terrakube will inject the following values inside the job context will running the user defined actions.
+By default terrakube will inject the following values inside the job context while running the user defined actions.
 
 - toolsDirectory
 - workingDirectory
@@ -56,7 +99,8 @@ By default terrakube will inject the following values inside the job context wil
 - vcsType
 - accessToken
 - terraformOutput
-- workspace variables and environment variables 
+- workspace variables
+- workspace environment variables 
 
 if you are using the ***Bash*** runtime this fields will be available as environment variables, for ***Groovy*** this values are injecte as bindings that can be access using the groovy syntax with ***$*** character
 
@@ -99,4 +143,18 @@ flow:
     step: 300
   - type: "terraformDestroy"
     step: 400
-```ß
+```
+
+## Supported External tools
+
+Terrakube extension support the following tools:
+
+- Terratag
+- Infracost (Work in progress)
+- Snyk (Work in progress)
+- Open Policy Engine (work in progress)
+- SendGrid 
+
+## Contribute
+
+If you want to integrate terrakube extension with other tools feel free to create a fork and send a pull request to this repostiory
