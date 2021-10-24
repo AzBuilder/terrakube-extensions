@@ -74,11 +74,12 @@ flow:
         priority: 100
         before: true
         script: |
-          
           import TerraTag
-
-          new TerraTag().downloadTerraTag("$workingDirectory", "0.1.29", "darwin", "amd64")
-          "TerraTag Download Compledted..."
+          new TerraTag().loadTool(
+            "$workingDirectory",
+            "$bashToolsDirectory",
+            "0.1.30")
+          "Terratag download completed"
 ```
 
 > All clases should end with extension ***".groovy"***
@@ -87,7 +88,8 @@ flow:
 
 By default terrakube will inject the following values inside the job context while running the user defined actions.
 
-- toolsDirectory
+- bashToolsDirectory
+- terrakubeToolsRepository
 - workingDirectory
 - organizationId
 - workspaceId
@@ -105,6 +107,8 @@ By default terrakube will inject the following values inside the job context whi
 if you are using the ***Bash*** runtime this fields will be available as environment variables, for ***Groovy*** this values are injecte as bindings that can be access using the groovy syntax with ***$*** character
 
 ## Advance example
+
+Example 1: Writing all the custom logic in groovy and bash with fields injection
 ```yaml
 flow:
   - type: "terraformPlan"
@@ -145,16 +149,42 @@ flow:
     step: 400
 ```
 
+Example 2: Reusing exiting Terrakube extension to simplify the flow
+```yaml
+flow:
+- type: "terraformPlan"
+  step: 100
+  commands:
+    - runtime: "GROOVY"
+      priority: 100
+      before: true
+      script: |
+        import TerraTag
+        new TerraTag().loadTool(
+          "$workingDirectory",
+          "$bashToolsDirectory",
+          "0.1.30")
+        "Terratag download completed"
+    - runtime: "BASH"
+      priority: 200
+      before: true
+      script: |
+        cd $workingDirectory
+        terratag -tags="{\"environment_id\": \"development\"}"
+- type: "terraformApply"
+  step: 300
+```
+
 ## Supported External tools
 
 Terrakube extension support the following tools:
 
-- Terratag
+- Terratag 
 - Infracost (Work in progress)
 - Snyk (Work in progress)
 - Open Policy Engine (work in progress)
-- SendGrid 
+- SendGrid (Work in progress)
 
 ## Contribute
 
-If you want to integrate terrakube extension with other tools feel free to create a fork and send a pull request to this repostiory
+If you want to integrate terrakube extension with other tools feel free to create a fork and send a pull request to this repository
