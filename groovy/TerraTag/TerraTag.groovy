@@ -33,6 +33,7 @@ class TerraTag {
         ArchiveInputStream terraTagTarGz = new TarArchiveInputStream(gzi)
 
         File targetDir = new File(toolsDirectory);
+
         try {
             ArchiveInputStream i = terraTagTarGz
             ArchiveEntry entry = null
@@ -52,12 +53,14 @@ class TerraTag {
                     if (!parent.isDirectory() && !parent.mkdirs()) {
                         throw new IOException("failed to create directory " + parent)
                     }
-                    try (OutputStream o = Files.newOutputStream(f.toPath())) {
-                        IOUtils.copy(i, o);
-                    }
+                    OutputStream o = Files.newOutputStream(f.toPath())
+                    IOUtils.copy(i, o);
+                    o.close()
                 }
             }
             i.close()
+        } catch (IOException exception) {
+            println exception.getMessage()
         }
 
         //MAKE TERRATAG AN EXECUTABLE FILE
