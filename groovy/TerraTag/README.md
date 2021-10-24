@@ -22,6 +22,7 @@ flow:
       priority: 200
       before: true
       script: |
+        cd $workingDirectory
         terratag -tags="{\"environment_id\": \"development\"}"
 - type: "terraformApply"
   step: 300
