@@ -36,3 +36,4 @@ target/
 *.tfstate
 *.tfstate.backup
 .terraform/
+out/
