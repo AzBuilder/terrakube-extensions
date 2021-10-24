@@ -33,7 +33,8 @@ class TerraTag {
         ArchiveInputStream terraTagTarGz = new TarArchiveInputStream(gzi)
 
         File targetDir = new File(toolsDirectory);
-        try (ArchiveInputStream i = terraTagTarGz) {
+        try {
+            ArchiveInputStream i = terraTagTarGz
             ArchiveEntry entry = null
             while ((entry = i.getNextEntry()) != null) {
                 if (!i.canReadEntryData(entry)) {
@@ -56,6 +57,7 @@ class TerraTag {
                     }
                 }
             }
+            i.close()
         }
 
         //MAKE TERRATAG AN EXECUTABLE FILE
