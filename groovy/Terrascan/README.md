@@ -23,7 +23,7 @@ flow:
         priority: 200
         after: true
         script: |
-          cd $$workingDirectory;
+          cd $workingDirectory;
           terrascan scan -i terraform -t azure;
 
 ```
