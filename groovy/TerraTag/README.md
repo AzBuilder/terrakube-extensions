@@ -1,4 +1,4 @@
-#Terratag Extension
+# Terratag Extension
 
 [Terratag](https://github.com/env0/terratag) is a CLI tool that enables users of Terraform to automatically create and maintain tags across their entire set of AWS, Azure, and GCP resources
 
@@ -26,4 +26,5 @@ flow:
         terratag -tags="{\"environment_id\": \"development\"}"
 - type: "terraformApply"
   step: 300
+
 ```
