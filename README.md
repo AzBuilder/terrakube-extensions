@@ -175,6 +175,45 @@ flow:
   step: 300
 ```
 
+Example 3: Handle terraform output after terraform apply 
+```yaml
+flow:
+  - type: "terraformPlan"
+    step: 100
+    commands:
+      - runtime: "GROOVY"
+        priority: 100
+        before: true
+        script: |
+          import TerraTag
+          new TerraTag().loadTool(
+            "$workingDirectory",
+            "$bashToolsDirectory",
+            "0.1.30")
+          "Terratag download completed"
+      - runtime: "BASH"
+        priority: 200
+        before: true
+        script: |
+          cd $workingDirectory
+          terratag -tags="{\"environment_id\": \"development\"}"
+  - type: "terraformApply"
+    step: 200
+    commands:
+      - runtime: "GROOVY"
+        priority: 100
+        after: true
+        script: |
+          import groovy.json.JsonSlurper
+
+          def jsonSlurper = new JsonSlurper()
+          def terraformOutput = jsonSlurper.parseText("$terraformOutputJson")
+
+          terrakubeOutput << "This is the name of the RG ${terraformOutput.rg_name.value}"
+  - type: "terraformDestroy"
+    step: 400
+```
+
 ## Supported External tools
 
 Terrakube extension support the following tools:
