@@ -218,10 +218,13 @@ flow:
 
 Terrakube extension support the following tools:
 
-- Terratag 
-- Infracost (Work in progress)
+- Terratag (Groovy Extension)
+- Infracost (Groovy Extension)
+- Open Policy Agent (Groovy Extensionthrough Terrascan)
+
+## Extenal Tools in development
+
 - Snyk (Work in progress)
-- Open Policy Engine (work in progress)
 - SendGrid (Work in progress)
 
 ## Contribute
