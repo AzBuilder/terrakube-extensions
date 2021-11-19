@@ -1,5 +1,6 @@
 @Grapes([
-        @Grab('com.sendgrid:sendgrid-java:4.8.0')
+        @Grab('com.sendgrid:sendgrid-java:4.8.0'),
+        @Grab("com.fasterxml.jackson.core:jackson-annotations:2.12.1")
 ])
 import com.sendgrid.*
 
