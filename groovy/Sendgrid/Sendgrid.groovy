@@ -9,7 +9,7 @@ import com.sendgrid.helpers.mail.Mail
 import com.sendgrid.helpers.mail.objects.*
 
 class Sendgrid {
-    def sendMail(mailFrom, mailTo, mailSubject, mailBody, mailBodyContentType, sendgridKey) {
+    def sendMail(mailFrom, mailTo, mailSubject, mailBody, mailBodyContentType, sendgridKey, output) {
         Email from = new Email(mailFrom);
         String subject = mailSubject;
         Email to = new Email(mailTo);
@@ -23,5 +23,9 @@ class Sendgrid {
         request.setEndpoint("mail/send");
         request.setBody(mail.build());
         Response response = sg.api(request);
+
+        output << "Sendgrid Response Code: ${response.getStatusCode()}"
+        output << "Sendgrid Response Body: ${response.getBody()}"
+        output << "Sendgrid Response Headers: ${response.getHeaders()}"
     }
 }
