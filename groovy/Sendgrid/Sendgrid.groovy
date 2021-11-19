@@ -25,7 +25,5 @@ class Sendgrid {
         Response response = sg.api(request);
 
         output << "Sendgrid Response Code: ${response.getStatusCode()} \n"
-        output << "Sendgrid Response Body: ${response.getBody()} \n"
-        output << "Sendgrid Response Headers: ${response.getHeaders()} \n"
     }
 }
