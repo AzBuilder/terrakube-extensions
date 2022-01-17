@@ -267,10 +267,12 @@ Terrakube extension support the following tools:
 - Infracost (Groovy Extension)
 - Open Policy Agent (Groovy Extension through Terrascan)
 - SendGrid (Groovy Extension)
+- Snyk (Groovy Extension)
 
 ## Extenal Tools in development
 
-- Snyk (Work in progress)
+- Slack
+- Teams
 
 ## Contribute
 
