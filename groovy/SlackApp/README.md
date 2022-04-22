@@ -12,7 +12,7 @@ flow:
         priority: 100
         after: true
         script: |
-          import SlackApp()
+          import SlackApp
 
           new SlackApp().sendMessage(
               "#general", 
