@@ -268,10 +268,10 @@ Terrakube extension support the following tools:
 - Open Policy Agent (Groovy Extension through Terrascan)
 - SendGrid (Groovy Extension)
 - Snyk (Groovy Extension)
+- Slack (Groovy Extension)
 
 ## Extenal Tools in development
 
-- Slack
 - Teams
 
 ## Contribute
