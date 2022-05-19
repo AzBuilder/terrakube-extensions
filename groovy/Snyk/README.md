@@ -1,6 +1,6 @@
 # Snyk Extension
 
-[Snyk](https://github.com/snyk/snyk) scans and monitors your projects for security vulnerabilities..
+[Snyk](https://github.com/snyk/snyk) scans and monitors your projects for security vulnerabilities.
 
 # Example:
 ```yaml
