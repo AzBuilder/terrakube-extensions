@@ -11,14 +11,28 @@ class SlackApp {
         com.slack.api.Slack slack = com.slack.api.Slack.getInstance();
         MethodsClient methods = slack.methods(slackToken);
 
-        ChatPostMessageRequest request = ChatPostMessageRequest
-            .builder()
-            .channel(channel)
-            .text(message)
-            .build();
+        File tsId = new File("tsIdSlackNotification")
 
-        ChatPostMessageResponse response = methods.chatPostMessage(request);
+        if(tsId.exists()) {
+            ChatPostMessageRequest requestNew = ChatPostMessageRequest
+                .builder()
+                .channel(channel)
+                .text(message)
+                .threadTs(tsId.text)
+                .build();
+            
+            ChatPostMessageResponse responseNew = methods.chatPostMessage(requestNew);
+            tsId.text = responseNew.getTs()
+        } else {
+            ChatPostMessageRequest requestOld = ChatPostMessageRequest
+                .builder()
+                .channel(channel)
+                .text(message)
+                .build();
 
+            ChatPostMessageResponse responseOld = methods.chatPostMessage(requestOld);
+            tsId.text = responseOld.getTs()
+        }
         output << "Slack Messaged sent successfuly...\n"
     }
 }
