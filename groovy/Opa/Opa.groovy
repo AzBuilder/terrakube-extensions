@@ -9,7 +9,7 @@ class Opa {
     def loadTool(workingDirectory, toolsDirectory, version) {
         String os = checkOS()
         String opaFile = ""
-        switch(expression) { 
+        switch(os) { 
            case "darwin":
               opaFile="opa_darwin_amd64" 
               break; 
