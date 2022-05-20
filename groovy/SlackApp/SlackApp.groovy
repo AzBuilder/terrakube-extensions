@@ -14,22 +14,36 @@ class SlackApp {
         this.workingDirectory = workingDirectory
     }
 
+    SlackApp(){
+        this.workingDirectory = ""
+    }
+
     def sendMessage(channel, message, slackToken, output) {
         com.slack.api.Slack slack = com.slack.api.Slack.getInstance();
         MethodsClient methods = slack.methods(slackToken);
 
-        File tsId = new File("${this.workingDirectory}/tsId")
-
-        if(tsId.exists()) {
-            ChatPostMessageRequest requestNew = ChatPostMessageRequest
-                .builder()
-                .channel(channel)
-                .text(message)
-                .threadTs(tsId.text)
-                .build();
+        if(!this.workingDirectory.isEmpty()){
+            File tsId = new File("${this.workingDirectory}/tsId")
+            if(tsId.exists()) {
+                ChatPostMessageRequest requestNew = ChatPostMessageRequest
+                    .builder()
+                    .channel(channel)
+                    .text(message)
+                    .threadTs(tsId.text)
+                    .build();
             
-            ChatPostMessageResponse responseNew = methods.chatPostMessage(requestNew);
-            tsId.text = responseNew.getTs()
+                ChatPostMessageResponse responseNew = methods.chatPostMessage(requestNew);
+                tsId.text = responseNew.getTs()
+            } else {
+                ChatPostMessageRequest requestOld = ChatPostMessageRequest
+                    .builder()
+                    .channel(channel)
+                    .text(message)
+                    .build();
+
+                ChatPostMessageResponse responseOld = methods.chatPostMessage(requestOld);
+                tsId.text = responseOld.getTs()
+            }
         } else {
             ChatPostMessageRequest requestOld = ChatPostMessageRequest
                 .builder()
@@ -38,8 +52,8 @@ class SlackApp {
                 .build();
 
             ChatPostMessageResponse responseOld = methods.chatPostMessage(requestOld);
-            tsId.text = responseOld.getTs()
         }
+        
         output << "Slack Messaged sent successfuly...\n"
     }
 }
