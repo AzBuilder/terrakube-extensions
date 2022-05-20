@@ -7,11 +7,18 @@ import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.slack.api.methods.response.chat.ChatPostMessageResponse
 
 class SlackApp {
+
+    String workingDirectory
+
+    SlackApp(workingDirectory){
+        this.workingDirectory = workingDirectory
+    }
+
     def sendMessage(channel, message, slackToken, output) {
         com.slack.api.Slack slack = com.slack.api.Slack.getInstance();
         MethodsClient methods = slack.methods(slackToken);
 
-        File tsId = new File("$workingDirectory/tsIdSlackNotification")
+        File tsId = new File("${this.workingDirectory}/tsId")
 
         if(tsId.exists()) {
             ChatPostMessageRequest requestNew = ChatPostMessageRequest
