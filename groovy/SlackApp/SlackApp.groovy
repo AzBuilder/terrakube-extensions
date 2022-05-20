@@ -11,7 +11,7 @@ class SlackApp {
         com.slack.api.Slack slack = com.slack.api.Slack.getInstance();
         MethodsClient methods = slack.methods(slackToken);
 
-        File tsId = new File("tsIdSlackNotification")
+        File tsId = new File("$workingDirectory/tsIdSlackNotification")
 
         if(tsId.exists()) {
             ChatPostMessageRequest requestNew = ChatPostMessageRequest
