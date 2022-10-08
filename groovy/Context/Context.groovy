@@ -16,7 +16,7 @@ class Context {
 
     def saveFile(propertyName, fileName) {
         def jsonSlurper = new JsonSlurper()
-        def context = jsonSlurper.parseText("{}")
+        def context = getContext(jobId)
 
         File file = new File("${workingDirectory}/${fileName}")
         String fileContent = file.text
@@ -39,8 +39,24 @@ class Context {
         
     }
 
-    def get(name) {
-        
+    def saveData(propertyName, data) {
+        context.put(propertyName, data)
+
+        String jsonOut = getContext(jobId)
+
+        def post = new URL("${terrakubeApi}/context/v1/${jobId}").openConnection();
+        def message = jsonOut
+        post.setRequestMethod("POST")
+        post.setDoOutput(true)
+        post.setRequestProperty("Content-Type", "application/json")
+        post.setRequestProperty("Authorization", "Bearer ${terrakubeToken}")
+        post.getOutputStream().write(message.getBytes("UTF-8"))
+        def postRC = post.getResponseCode()
+        println "Saving Context Response: ${postRC}" 
+    }
+
+    def getContext(jobId) {
+        jsonSlurper.parseText("{}")
     }
 
 }
