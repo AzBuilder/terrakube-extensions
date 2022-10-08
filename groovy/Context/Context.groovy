@@ -4,7 +4,7 @@ import groovy.json.JsonOutput
 class Context {
     String terrakubeApi
     String terrakubeToken
-    String workspaceDirectory
+    String workingDirectory
     String jobId
 
     Context(terrakubeApi, terrakubeToken, jobId, workingDirectory){
@@ -18,7 +18,7 @@ class Context {
         def jsonSlurper = new JsonSlurper()
         def context = jsonSlurper.parseText("{}")
 
-        File file = new File("${workspaceDirectory}/${fileName}")
+        File file = new File("${workingDirectory}/${fileName}")
         String fileContent = file.text
 
         def body = jsonSlurper.parseText(fileContent)

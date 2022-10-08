@@ -1,6 +1,6 @@
 # Context Extension
 
-Terrakube internal extension to save job context information between steps.
+Terrakube internal extension to save job context information between steps, this examples shows how to save the infracost information inside the job context.
 
 # Example:
 ```yaml
@@ -35,11 +35,8 @@ flow:
       after: true
       script: |
         import Context
-
-        File infracostFile = new File("$workingDirectory/infracost.json")
-        String infracostData = infracostFile.text
         
-        new Context($terrakubeApi, $terrakubeToken, $jobId, $workingDirectory).saveFile("infracost", infracostData)
+        new Context("$terrakubeApi", "$terrakubeToken", "$jobId", "$workingDirectory").saveFile("infracost", "infracost.json")
 
         "Save context completed..."
 
