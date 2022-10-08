@@ -101,6 +101,8 @@ By default terrakube will inject the following values inside the job context whi
 - vcsType
 - accessToken
 - terraformOutput
+- terrakubeApi
+- terrakubeToken
 - workspace variables
 - workspace environment variables 
 
