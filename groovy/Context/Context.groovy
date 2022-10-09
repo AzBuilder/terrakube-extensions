@@ -56,6 +56,7 @@ class Context {
     }
 
     def getContext(jobId) {
+        def jsonSlurper = new JsonSlurper()
         jsonSlurper.parseText("{}")
     }
 
