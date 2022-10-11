@@ -73,7 +73,7 @@ class Context {
         
         String contextBody = IOUtils.toString(inputStream, "UTF-8");
         println "Response code: ${getRC}"
-        println "Current context: ${getRC}"
+        println "Current context: ${contextBody}"
 
         jsonSlurper.parseText(contextBody)
     }
