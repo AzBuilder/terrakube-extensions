@@ -1,3 +1,7 @@
+@Grapes([
+        @Grab('commons-io:commons-io:2.8.0')
+])
+import org.apache.commons.io.IOUtils
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
