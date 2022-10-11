@@ -35,29 +35,43 @@ class Context {
         post.setRequestProperty("Authorization", "Bearer ${terrakubeToken}")
         post.getOutputStream().write(message.getBytes("UTF-8"))
         def postRC = post.getResponseCode()
-        println "Saving Context Response: ${postRC}"
+        println "Updating Context Response: ${postRC}"
         
     }
 
-    def saveData(propertyName, data) {
+    def saveProperty(propertyName, data) {
+        def context = getContext(jobId)
+
         context.put(propertyName, data)
 
-        String jsonOut = getContext(jobId)
+        String bodyJson = JsonOutput.toJson(context)
 
         def post = new URL("${terrakubeApi}/context/v1/${jobId}").openConnection();
-        def message = jsonOut
+        def message = bodyJson
         post.setRequestMethod("POST")
         post.setDoOutput(true)
         post.setRequestProperty("Content-Type", "application/json")
         post.setRequestProperty("Authorization", "Bearer ${terrakubeToken}")
         post.getOutputStream().write(message.getBytes("UTF-8"))
         def postRC = post.getResponseCode()
-        println "Saving Context Response: ${postRC}" 
+        println "Updating Context Response: ${postRC}" 
     }
 
     def getContext(jobId) {
         def jsonSlurper = new JsonSlurper()
-        jsonSlurper.parseText("{}")
+
+        def get = new URL("${terrakubeApi}/context/v1/${jobId}").openConnection();
+        get.setRequestMethod("GET")
+        get.setDoOutput(true)
+        get.setRequestProperty("Authorization", "Bearer ${terrakubeToken}")
+        def getRC = get.getResponseCode()
+        def inputStream = get.getInputStream();
+        
+        String contextBody = IOUtils.toString(inputStream, "UTF-8");
+        println "Response code: ${getRC}"
+        println "Current context: ${getRC}"
+
+        jsonSlurper.parseText(contextBody)
     }
 
 }
