@@ -1,0 +1,17 @@
+commands:
+  - runtime: "GROOVY"
+    priority: 100
+    before: true
+    script: |
+      import TerraTag
+      new TerraTag().loadTool(
+        "$workingDirectory",
+        "$bashToolsDirectory",
+        "0.1.48")
+      "Terratag download completed"
+  - runtime: "BASH"
+    priority: 200
+    before: true
+    script: |
+      cd $workingDirectory
+      terratag -tags="{\"environment_id\": \"development\"}"
