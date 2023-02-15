@@ -7,7 +7,7 @@ commands:
       new TerraTag().loadTool(
         "$workingDirectory",
         "$bashToolsDirectory",
-        "0.1.30")
+        "0.1.48")
       "Terratag download completed"
   - runtime: "BASH"
     priority: 200
