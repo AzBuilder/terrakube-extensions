@@ -18,7 +18,7 @@ class SlackApp {
         this.workingDirectory = ""
     }
 
-    def sendMessage(channel, message, slackToken, output) {
+    def sendMessage(channel, message, slackToken, attachment, output) {
         com.slack.api.Slack slack = com.slack.api.Slack.getInstance();
         MethodsClient methods = slack.methods(slackToken);
 
@@ -30,6 +30,7 @@ class SlackApp {
                     .channel(channel)
                     .text(message)
                     .threadTs(tsId.text)
+                    .attachments(attachment)
                     .build();
             
                 ChatPostMessageResponse responseNew = methods.chatPostMessage(requestNew);
@@ -39,6 +40,7 @@ class SlackApp {
                     .builder()
                     .channel(channel)
                     .text(message)
+                    .attachments(attachment)
                     .build();
 
                 ChatPostMessageResponse responseOld = methods.chatPostMessage(requestOld);
@@ -49,6 +51,7 @@ class SlackApp {
                 .builder()
                 .channel(channel)
                 .text(message)
+                .attachments(attachment)
                 .build();
 
             ChatPostMessageResponse responseOld = methods.chatPostMessage(requestOld);
