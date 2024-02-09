@@ -59,7 +59,7 @@ flow:
               "$SLACK_TOKEN", 
               terrakubeOutput);
 
-          slackApp.sendMessage(
+          slackApp.sendMessageWithoutAttachment(
               "#general", 
               "First reply to message!", 
               "$SLACK_TOKEN", 
