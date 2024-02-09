@@ -14,7 +14,7 @@ flow:
         script: |
           import SlackApp
 
-          new SlackApp().sendMessage(
+          new SlackApp().sendMessageWithoutAttachment(
               "#general", 
               "Hello Terrakube!", 
               "$SLACK_TOKEN", 
@@ -39,7 +39,7 @@ flow:
 
           SlackApp slackApp = new SlackApp("$workingDirectory")
           
-          slackApp.sendMessage(
+          slackApp.sendMessageWithoutAttachment(
               "#general", 
               "Hello Terrakube!", 
               "$SLACK_TOKEN", 
@@ -53,7 +53,7 @@ flow:
 
           SlackApp slackApp = new SlackApp("$workingDirectory")
           
-          slackApp.sendMessage(
+          slackApp.sendMessageWithoutAttachment(
               "#general", 
               "First reply to message!", 
               "$SLACK_TOKEN", 
